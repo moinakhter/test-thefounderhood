@@ -1,0 +1,142 @@
+<!doctype html>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>The Founderhood Internship Test</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+
+<div class="container">
+	<form action="/" method="post" id="form">
+		<div class="row clone">
+			<div class="col-md-4">
+				<label>Full Name*</label>
+					<input required placeholder="Full Name" class="form-control" type="text" name="full_name[]">
+			</div>
+
+			<div class="col-md-4">
+				<label>Subject*</label>
+				<select required name="subject[]" class="form-control">
+					<option disabled selected value="">Subject</option>
+					<option value="Computer">Computer</option>
+					<option value="English">English</option>
+					<option value="Physics">Physics</option>
+				</select>
+			</div>
+
+			<div class="col-md-4">
+				<label>_____</label><br>
+				<a href="javascript:void(0)" class="add">
+					<i class="bi bi-plus-lg">
+					<svg style="color: green;"  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+</svg>
+					</i>
+				</a>
+				<a href="javascript:void(0)" class="remove">
+					<i class="bi bi-minus-lg">
+					<svg style="color: red;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16">
+  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+  <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+</svg>
+					</i>
+				</a>
+			</div>
+		</div>
+		<div class="append">
+		</div>
+	
+		<div class="row clone">
+
+			<div class="col-md-4">
+<br>
+				<button type="submit" class="btn btn-primary align-left">Save</button>
+			</div>
+		</div>
+	</form>
+
+
+	<div class="row">
+		<div class="col-md-12">
+			<table class="table">
+				<thead>
+						<tr>
+						<th colspan="3" align="center">Student Details</th>
+					   </tr>
+					<tr>
+						<th>S.no</th>
+						<th>Name</th>
+						<th>Subject</th>
+					</tr>
+				</thead>
+				<tbody class="displayData">
+					<tr>
+
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+</div>
+
+
+<script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript">
+		//cloning the form field
+		var cloneFields = $("form .clone").html();
+
+		//add the field
+		$("body").delegate(".add",'click',function(argument) {
+			$("#form .append").append('<div class="row">'+cloneFields+'<div>');
+		});
+
+		//remove the field
+		$("body").delegate(".remove",'click',function(argument) {
+			if($('.remove').length > 1){
+				$(this).parent().parent().remove();
+			}else{
+				alert("You can not remove all form fields");
+			}
+			
+		});
+
+		$(document).on('submit','#form',function(e){
+ 			e.preventDefault();
+
+ 			var name = $('input[name="full_name[]"]').val();
+ 			var htmlTable = "";
+
+ 			//collecting data from the form for displying in the table.
+ 			const subject = $.map($('select[name="subject[]"]'), function(el) { return el.value; });
+ 			$('input[name="full_name[]"]').each(function($k,$v) {
+ 				htmlTable += "<tr>" ;
+ 				htmlTable += "<td>"+($k+1)+"</td>" ;
+ 				htmlTable += "<td>"+$(this).val()+"</td>" ;
+ 				htmlTable += "<td>"+subject[$k]+"</td>" ;
+ 				htmlTable += "</tr>" ;
+ 			});
+			
+ 			
+ 			$(".displayData").html(htmlTable);
+
+ 			//success msg
+ 			$("#form").append("<div class='alert alert-primary'>Details Saved, We are going to display the details, Please wait...</div>");
+ 			
+ 			//after a few second form will hide and display the data on the web.
+ 			setTimeout(function() {
+ 				$('#form').hide(100);
+ 				$('.table').show(1000);
+ 			},2500);
+
+        });
+		
+	</script>
+
+</body>
+</html>
