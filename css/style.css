@@ -1,2 +1,16 @@
 .row{margin-top: 15px !important;}
+
 .table{display: none;}
+
+.remove2{
+    color: red;
+    font-size: 22px;
+    border-radius: 52px;
+    padding: 3px;
+    float: left;
+    margin-left: 5px;
+}
+.clone-text input,.clone-select select{
+	width: 90% !important;
+    float: left !important;
+}
